@@ -27,6 +27,11 @@ void URRobotJointPControl::controlRobot() {
       for (size_t i = 0; i < 6; i++) {
         _q_des[i] = _packet_jnt_target.q_des[i];
       }
+      fprintf(stderr, "Received JointTargetPos [");
+      for(size_t i=0;i<6;i++){
+        fprintf(stderr, "%.3lf ",_packet_jnt_target.q_des[i]);
+      }
+      fprintf(stderr, "]\n");
     }else{
       fprintf(stderr, "Received JointTargetPos is not safe. Rejected.\n\t");
       for(size_t i=0;i<6;i++){
@@ -34,6 +39,7 @@ void URRobotJointPControl::controlRobot() {
       }
       fprintf(stderr, "\n");
     }
+    _packet_jnt_target.clearUpdated();
   }
 
   double qd_cmd[6] = {0,0,0,0,0,0};
