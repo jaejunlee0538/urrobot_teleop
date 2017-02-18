@@ -33,7 +33,7 @@ set(HEADERS
         src/PacketURConfigCommands.h
         src/PacketJointTargetPos.h)
 
-add_executable(run_controlbox_main_urrobot_joint_p_control
+add_executable(run_joint_p_control
         src/main_JointPControl.cpp
         src/LoopInterface.cpp
         src/URRobotInterface.cpp
@@ -41,10 +41,10 @@ add_executable(run_controlbox_main_urrobot_joint_p_control
         src/URRobotJointPControl.cpp
         ${HEADERS}
         )
-#set_target_properties(run_controlbox_main_urrobot_joint_p_control PROPERTIES COMPILE_DEFINITIONS "REAL_ROBOT")
-#target_compile_definitions(run_controlbox_main_urrobot_joint_p_control PRIVATE FAKE_PRINT_VERBOSE)
-target_compile_definitions(run_controlbox_main_urrobot_joint_p_control PRIVATE FAKE_LOOP_PERIOD=500)
-target_link_libraries(run_controlbox_main_urrobot_joint_p_control pthread SocketLibs PacketLibs)
+#set_target_properties(run_joint_p_control PROPERTIES COMPILE_DEFINITIONS "REAL_ROBOT")
+#target_compile_definitions(run_joint_p_control PRIVATE FAKE_PRINT_VERBOSE)
+target_compile_definitions(run_joint_p_control PRIVATE FAKE_LOOP_PERIOD=500)
+target_link_libraries(run_joint_p_control pthread SocketLibs PacketLibs)
 
 ############################################################################################
 add_executable(test_tcp_server
@@ -63,5 +63,5 @@ target_link_libraries(test_packet_manager_receiver SocketLibs PacketLibs)
 add_executable(test_bytes_buffer test/TestBytesBuffer.cpp)
 target_link_libraries(test_bytes_buffer SocketLibs PacketLibs)
 
-add_executable(test_comm_with_control_box test/TestCommWithControlBox.cpp src/ConioLinux.cpp)
-target_link_libraries(test_comm_with_control_box SocketLibs PacketLibs)
+add_executable(test_joint_p_control test/TestJointPControl.cpp src/ConioLinux.cpp)
+target_link_libraries(test_joint_p_control SocketLibs PacketLibs)
