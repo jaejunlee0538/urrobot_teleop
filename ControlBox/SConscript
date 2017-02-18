@@ -1,0 +1,20 @@
+# Import construction environment
+Import('libs')
+Import('target_name')
+Import('cpp_defines')
+Import('ccflags')
+
+cpppath = Split('#/ur-c-api-1.8 #/src')
+libpath = Split('#/ur-c-api-1.8')
+source_code = Split('src/main.cpp src/LoopInterface.cpp src/ur5_robot.cpp')
+
+my_env = Environment(CC = 'g++',
+					 CPPPATH=cpppath,
+					 CPPDEFINES=['NDEBUG'])
+my_env.Append(CPPDEFINES=cpp_defines)
+# objects = my_env.Object(source=source_code)
+my_env.Program(	target = target_name,
+	            source = source_code,
+	            LIBPATH = libpath,
+	            CCFLAGS = ccflags,
+	            LIBS = libs)

@@ -1,0 +1,26 @@
+# Construction environment
+
+target_name = ['main']
+
+control_box = int(ARGUMENTS.get('control_box', 1))
+
+if control_box:
+	# build at control box
+	ccflags = '-O2 -Wall -m32'
+	libs = ['robotcomm', 'kinematics', 'configuration', 'dev', 'collision', 'm', 'math', 'legacy', 'pthread','rt']
+
+	cpp_defines = Split('REAL_ROBOT')
+	SConscript('SConscript', variant_dir='#build/real', exports = Split('libs target_name cpp_defines ccflags'))
+
+	cpp_defines = []
+	SConscript('SConscript', variant_dir='#build/sim', exports = Split('libs target_name cpp_defines ccflags'))
+
+else:
+	# build at Personal PC
+	libs = ['pthread', 'rt']
+	cpp_defines = []
+	ccflags = '-O2 -Wall'
+	SConscript('SConscript', variant_dir='#build/sim', exports = Split('libs target_name cpp_defines ccflags'))
+
+env = Environment(CC = 'g++')
+env.Program(target='#build/test_prog', source='#src/test_program.cpp')
